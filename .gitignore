@@ -56,3 +56,22 @@ docs/_build/
 
 # PyBuilder
 target/
+
+
+data/
+
+samples/
+
+data\.pkl
+
+features\.pt
+
+model\.pkl
+
+autoencoder_fc\.pt
+
+autoencoder\.pt
+
+model-k1000-feat\.pkl
+
+autoencoder_conv\.pt
