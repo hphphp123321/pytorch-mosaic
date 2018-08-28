@@ -9,13 +9,13 @@ from model import VAE2
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-dataset = torchvision.datasets.CIFAR10('./data/cifar10/', train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
+dataset = torchvision.datasets.CIFAR100('./data/cifar100/', train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
 data_loader = torch.utils.data.DataLoader(dataset=dataset,
                                           batch_size=1,
                                           shuffle=False)
 
 
-model = torch.load('autoencoder_conv.pt')
+model = torch.load('autoencoder_conv2.pt')
 
 with torch.no_grad():
     model.eval()
@@ -32,4 +32,4 @@ with torch.no_grad():
     logvar = torch.cat(data_logvar).cpu()
 
 
-torch.save((mu, logvar), 'features.pt')
+torch.save((mu, logvar), 'features2.pt')

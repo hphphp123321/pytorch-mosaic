@@ -18,14 +18,14 @@ if not os.path.exists(sample_dir):
 
 # Hyper-parameters
 image_size = 32 * 32 * 3
-h_dim = 700
+# h_dim = 700
 z_dim = 512
 num_epochs = 100
 batch_size = 128
 learning_rate = 1e-3
 
 # MNIST dataset
-dataset = torchvision.datasets.CIFAR10('./data/cifar10/', train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
+dataset = torchvision.datasets.CIFAR100('./data/cifar100/', train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
 # dataset = torchvision.datasets.MNIST(root='./data',
 #                                      train=True,
 #                                      transform=transforms.ToTensor(),
@@ -93,7 +93,7 @@ for epoch in range(num_epochs):
         optimizer.step()
 
         if (i+1) % 10 == 0:
-            print ("Epoch[{}/{}], Step [{}/{}], Reconst Loss: {:.4f}, KL Div: {:.4f}"
+            print("Epoch[{}/{}], Step [{}/{}], Reconst Loss: {:.4f}, KL Div: {:.4f}"
                    .format(epoch+1, num_epochs, i+1, len(data_loader), reconst_loss.item(), kl_div.item()))
 
     with torch.no_grad():
@@ -108,4 +108,4 @@ for epoch in range(num_epochs):
         save_image(x_concat, os.path.join(sample_dir, 'reconst-{}.png'.format(epoch+1)))
 
 # Save model
-torch.save(model, './autoencoder_conv.pt')
+torch.save(model, './autoencoder_conv2.pt')

@@ -15,8 +15,8 @@ test_image = Image.open('/home/adrian/Documents/pytorch-mosaic/data/tiny-imagene
 test_image = test_image.resize((32, 32))
 array = np.array(test_image).reshape((1, -1))
 
-autoencoder = torch.load('autoencoder_conv.pt').to('cpu')
-model = pickle.load(open('./model-k1000-feat.pkl', 'rb'))
+autoencoder = torch.load('autoencoder_conv2.pt').to('cpu')
+model = pickle.load(open('./model-k1000-feat2.pkl', 'rb'))
 dataset = torchvision.datasets.CIFAR10('./data/cifar10/', train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
 mu, _ = torch.load('features.pt')
 

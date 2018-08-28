@@ -75,3 +75,7 @@ autoencoder\.pt
 model-k1000-feat\.pkl
 
 autoencoder_conv\.pt
+
+\.idea/
+
+*.pt
