@@ -1,6 +1,26 @@
 import numpy as np
 
 
+def number_of_patches(width, height, patch_size):
+    """
+    TO BE IMPLEMENTED BY STUDENT
+
+    """
+    n_patches_x = width // patch_size
+    n_patches_y = height // patch_size
+    return n_patches_x, n_patches_y
+
+
+def output_image_size(n_patches_x, n_patches_y, patch_size):
+    """
+    TO BE IMPLEMENTED BY STUDENT
+
+    """
+    width = n_patches_x * patch_size
+    height = n_patches_y * patch_size
+    return width, height
+
+
 def slice_image(image, tile_size):
     height = image.shape[0]
     width = image.shape[1]
@@ -13,8 +33,6 @@ def slice_image(image, tile_size):
     width = num_tiles_x * tile_size
 
     image = image[:height, :width]
-
-    print('new shape', image.shape)
 
     tiles = np.zeros((num_tiles_y, num_tiles_x, tile_size, tile_size, 3))
     for i, ty in enumerate(range(0, height, tile_size)):

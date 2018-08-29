@@ -8,7 +8,7 @@ class Base:
     def __init__(self):
         pass
 
-    def algorithm(self, image):
+    def mosaic(self, image):
         tiles = slice_image(image, 32)
         num_tiles = tiles.shape[0] * tiles.shape[1]
         flat_tiles = np.stack(tiles).reshape(num_tiles, -1)
@@ -23,6 +23,9 @@ class Base:
         new_tiles = np.stack(new_tiles).reshape(tiles.shape)
         new_image = make_image(new_tiles)
         return new_image
+
+    def train(self):
+        pass
 
     def get_patch(self, tile):
         pass
