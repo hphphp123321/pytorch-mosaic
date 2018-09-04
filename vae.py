@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 
 
-class VAE2(nn.Module):
+class VAE(nn.Module):
     def __init__(self):
-        super(VAE2, self).__init__()
+        super(VAE, self).__init__()
 
         # Encoder
         self.conv1 = nn.Conv2d(3, 16, kernel_size=3, stride=1, padding=1, bias=False)

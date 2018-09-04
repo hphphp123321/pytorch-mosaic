@@ -2,7 +2,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import pairwise_distances_argmin_min
 import torchvision
 from torchvision import transforms
-from model import VAE2
+from vae import VAE
 import numpy as np
 import torch
 from PIL import Image

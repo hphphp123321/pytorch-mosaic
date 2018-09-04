@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import torchvision
 from torchvision import transforms
 from torchvision.utils import save_image
-from model import VAE2
+from vae import VAE
 
 
 # Device configuration
@@ -18,64 +18,29 @@ if not os.path.exists(sample_dir):
 
 # Hyper-parameters
 image_size = 32 * 32 * 3
-# h_dim = 700
 z_dim = 512
 num_epochs = 100
 batch_size = 128
 learning_rate = 1e-3
 
-# MNIST dataset
-dataset = torchvision.datasets.CIFAR100('./data/cifar100/', train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
-# dataset = torchvision.datasets.MNIST(root='./data',
-#                                      train=True,
-#                                      transform=transforms.ToTensor(),
-#                                      download=True)
+
+dataset = torchvision.datasets.CIFAR100('./data/cifar10/', train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
 
 # Data loader
-data_loader = torch.utils.data.DataLoader(dataset=dataset,
-                                          batch_size=batch_size,
-                                          shuffle=True)
+data_loader = torch.utils.data.DataLoader(
+    dataset=dataset,
+    batch_size=batch_size,
+    shuffle=True
+)
 
 
-# # VAE model
-# class VAE(nn.Module):
-#     def __init__(self, image_size, h_dim=400, z_dim=20):
-#         super(VAE, self).__init__()
-#         self.fc1 = nn.Linear(image_size, h_dim)
-#         self.fc2 = nn.Linear(h_dim, z_dim)
-#         self.fc3 = nn.Linear(h_dim, z_dim)
-#         self.fc4 = nn.Linear(z_dim, h_dim)
-#         self.fc5 = nn.Linear(h_dim, image_size)
-#
-#     def encode(self, x):
-#         h = F.relu(self.fc1(x))
-#         return self.fc2(h), self.fc3(h)
-#
-#     def reparameterize(self, mu, log_var):
-#         std = torch.exp(log_var/2)
-#         eps = torch.randn_like(std)
-#         return mu + eps * std
-#
-#     def decode(self, z):
-#         h = F.relu(self.fc4(z))
-#         return F.sigmoid(self.fc5(h))
-#
-#     def forward(self, x):
-#         mu, log_var = self.encode(x)
-#         z = self.reparameterize(mu, log_var)
-#         x_reconst = self.decode(z)
-#         return x_reconst, mu, log_var
-
-
-
-
-
-model = VAE2().to(device)
-# model = VAE(image_size, h_dim, z_dim).to(device)
+model = VAE().to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.85)
 
 # Start training
 for epoch in range(num_epochs):
+    scheduler.step()
     for i, (x, _) in enumerate(data_loader):
         # Forward pass
         x = x.to(device)#.view(-1, image_size)
@@ -87,7 +52,7 @@ for epoch in range(num_epochs):
         kl_div = - 0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp())
 
         # Backprop and optimize
-        loss = reconst_loss + kl_div
+        loss = reconst_loss #+ kl_div
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -107,5 +72,5 @@ for epoch in range(num_epochs):
         x_concat = torch.cat([x.view(-1, 3, 32, 32), out.view(-1, 3, 32, 32)], dim=3)
         save_image(x_concat, os.path.join(sample_dir, 'reconst-{}.png'.format(epoch+1)))
 
-# Save model
-torch.save(model, './autoencoder_conv2.pt')
+    # Save model
+    torch.save(model, 'models/conv_vae.pt')

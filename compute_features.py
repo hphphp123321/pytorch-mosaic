@@ -3,7 +3,7 @@ import os
 import torch
 import torchvision
 from torchvision import transforms
-from model import VAE2
+from vae import VAE
 
 
 

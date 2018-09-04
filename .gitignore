@@ -79,3 +79,5 @@ autoencoder_conv\.pt
 \.idea/
 
 *.pt
+
+models/
