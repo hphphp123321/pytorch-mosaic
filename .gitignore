@@ -81,3 +81,5 @@ autoencoder_conv\.pt
 *.pt
 
 models/
+
+features/cifar10/

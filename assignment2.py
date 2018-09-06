@@ -15,8 +15,8 @@ def main():
 
     # The program will start execution here
     # Change the filename to load your favourite picture
-    file = './images/lion2.jpg'
-    train = True
+    file = './images/dog1.png'
+    train = False
 
     img = Image.open(file).convert('RGB')
     target_image = np.array(img) / 255

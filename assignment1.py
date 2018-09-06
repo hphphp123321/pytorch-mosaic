@@ -5,6 +5,30 @@ from sklearn.neighbors import NearestNeighbors
 from base import Base
 
 
+def main():
+    """
+    Assignment 1a - Average Patch Features
+    Assignment 1b - Nearest Neighbor Search
+
+    """
+
+    # The program will start execution here
+    # Change the filename to load your favourite picture
+    file = './images/lion.jpg'
+
+    img = Image.open(file).convert('RGB')
+    target_image = np.array(img) / 255
+
+    # This will execute the Mosaicking algorithm of Assignment 1
+    main = Assignment1()
+    output_image = main.mosaic(target_image)
+
+    # Saving the image inside in project root folder
+    output_image *= 255
+    im = Image.fromarray(output_image.astype('uint8'))
+    im.save('mosaic.png')
+
+
 class Assignment1(Base):
 
     def __init__(self):
@@ -46,24 +70,5 @@ class Assignment1(Base):
 
 
 if __name__ == '__main__':
-    """ 
-    Assignment 1a - Average Patch Features 
-    Assignment 1b - Nearest Neighbor Search
-    
-    """
+    main()
 
-    # The program will start execution here
-    # Change the filename to load your favourite picture
-    file = './images/lion.jpg'
-
-    img = Image.open(file).convert('RGB')
-    target_image = np.array(img) / 255
-
-    # This will execute the Mosaicking algorithm of Assignment 1
-    main = Assignment1()
-    output_image = main.mosaic(target_image)
-
-    # Saving the image inside in project root folder
-    output_image *= 255
-    im = Image.fromarray(output_image.astype('uint8'))
-    im.save('mosaic.png')
