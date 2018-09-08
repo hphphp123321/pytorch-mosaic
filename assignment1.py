@@ -1,5 +1,8 @@
+import os
+
 import numpy as np
 import pickle
+from sklearn.externals import joblib
 from PIL import Image
 from sklearn.neighbors import NearestNeighbors
 from base import Base
@@ -16,11 +19,17 @@ def main():
     # Change the filename to load your favourite picture
     file = './images/lion.jpg'
 
+    # Setting this to True will train the model
+    # All models are automatically saved in the folder 'models'
+    # After the model is trained well, you can set this to false
+    train = True
+
     img = Image.open(file).convert('RGB')
     target_image = np.array(img) / 255
 
     # This will execute the Mosaicking algorithm of Assignment 1
     main = Assignment1()
+    main.train(train)
     output_image = main.mosaic(target_image)
 
     # Saving the image inside in project root folder
@@ -35,7 +44,7 @@ class Assignment1(Base):
         super(Assignment1, self).__init__()
         self.data = pickle.load(open('./features/cifar10/raw.pkl', 'rb'))
         self.nn = self.get_model()
-        self.nn.fit(self.data.reshape(len(self.data), -1))
+        self.model_file = 'models/nearest_neighbor.pkl'
 
     def get_model(self):
         """
@@ -67,6 +76,20 @@ class Assignment1(Base):
 
         """
         return np.linalg.norm(self.feature(x) - self.feature(y))
+
+    def train(self, train=True):
+        if train:
+            print('Fitting NN model ...')
+            self.nn.fit(self.data.reshape(len(self.data), -1))
+            # with open(self.model_file, 'wb') as f:
+            joblib.dump(self.nn, self.model_file)
+
+            print('... done.')
+        elif os.path.exists(self.model_file):
+            # with open(self.model_file, 'rb') as f:
+            self.nn = joblib.load(self.model_file)
+        else:
+            print('Model not found.')
 
 
 if __name__ == '__main__':

@@ -62,6 +62,8 @@ data/
 
 samples/
 
+output/
+
 data\.pkl
 
 features\.pt

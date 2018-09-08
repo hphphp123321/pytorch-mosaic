@@ -1,3 +1,6 @@
+import os
+from datetime import datetime
+
 import numpy as np
 
 
@@ -53,3 +56,9 @@ def make_image(tiles):
             image[ty : ty + tile_size, tx : tx + tile_size] = tiles[i, j]
 
     return image
+
+
+def datetime_filename(filename):
+    base, ext = os.path.splitext(filename)
+    dtime = datetime.now().strftime("-%Y-%m-%d-%H-%M-%S")
+    return base + dtime + ext
