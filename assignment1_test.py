@@ -8,7 +8,8 @@ from assignment1 import Assignment1
 
 
 def make_folders():
-    os.makedirs('output/A1_test/', exist_ok=True)
+    os.makedirs('output/A1_test/features', exist_ok=True)
+    os.makedirs('output/A1_test/neighbors', exist_ok=True)
 
 
 def test_grid():
@@ -38,7 +39,7 @@ def test_feature():
     for col in range(num_cols):
         i += 1
         # patch_idx = np.random.randint(0, len(main.data))
-        patch_idx = 11020
+        patch_idx = 11020  # CHANGE THIS
         patch = main.data[patch_idx]
         feature = main.feature(patch)
         patch_mean = feature.reshape(1, 1, 3).repeat(32, 0).repeat(32, 1)
@@ -53,7 +54,7 @@ def test_feature():
 
     fig = plt.gcf()
     plt.show()
-    fname = utils.datetime_filename('output/A1_test/features.png')
+    fname = utils.datetime_filename('output/A1_test/features/grid.png')
     fig.savefig(fname, format='png', dpi=300)
 
 
@@ -65,6 +66,30 @@ def test_distance():
 
     dist = main.distance(patch1, patch2)
     print('Distance between two different patches: {:.4f}'.format(dist))
+
+
+def test_neighbors():
+    num_cols = 3
+
+    i = 0
+    for col in range(num_cols):
+        i += 1
+
+        patch_idx = np.random.randint(0, len(main.data))
+        patch = main.data[patch_idx]
+
+        plt.subplot(2, num_cols, i)
+        plt.title(str(patch_idx))
+        plt.imshow(patch)
+
+        neighbor = main.get_patch(patch).reshape(32, 32, 3)
+        plt.subplot(2, num_cols, num_cols + i)
+        plt.imshow(neighbor)
+
+    fig = plt.gcf()
+    plt.show()
+    fname = utils.datetime_filename('output/A1_test/neighbors/grid.png')
+    fig.savefig(fname, format='png', dpi=300)
 
 
 if __name__ == '__main__':
@@ -80,3 +105,6 @@ if __name__ == '__main__':
 
     print('\nTest Distance')
     test_distance()
+
+    print('\nTest Neighbors')
+    test_neighbors()
