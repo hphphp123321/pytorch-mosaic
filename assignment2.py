@@ -49,16 +49,7 @@ class Assignment2(Base):
         TO BE IMPLEMENTED BY STUDENT
 
         """
-        kmeans = KMeans(
-            n_clusters=700,
-            n_init=10,
-            max_iter=500,
-            tol=0.0001,
-            verbose=True,
-            n_jobs=10,
-        )
-
-        return kmeans
+        pass
 
     def train(self, train=True):
         model_file = 'models/kmeans.pkl'

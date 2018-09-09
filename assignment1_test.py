@@ -38,7 +38,6 @@ def test_feature():
     i = 0
     for col in range(num_cols):
         i += 1
-        # patch_idx = np.random.randint(0, len(main.data))
         patch_idx = 11020  # CHANGE THIS
         patch = main.data[patch_idx]
         feature = main.feature(patch)

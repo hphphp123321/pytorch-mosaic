@@ -72,16 +72,7 @@ class Assignment3(Base):
         TO BE IMPLEMENTED BY STUDENT
 
         """
-        kmeans = KMeans(
-            n_clusters=500,
-            n_init=1,
-            max_iter=300,
-            tol=0.0001,
-            verbose=True,
-            n_jobs=10,
-        )
-
-        return kmeans
+        pass
 
     def train(self, train=True):
         if train:

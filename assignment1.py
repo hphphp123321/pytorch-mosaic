@@ -55,7 +55,7 @@ class Assignment1(Base):
         TO BE IMPLEMENTED BY STUDENT
 
         """
-        return NearestNeighbors(n_neighbors=1, metric=self.distance)
+        pass
 
     def get_patch(self, tile):
         _, inds = self.nn.kneighbors(tile.reshape(1, -1))
@@ -72,14 +72,14 @@ class Assignment1(Base):
         :return: The average pixel color
         """
 
-        return np.mean(x.reshape(32, 32, 3), axis=(0, 1))
+        pass
 
     def distance(self, x, y):
         """
         TO BE IMPLEMENTED BY STUDENT
 
         """
-        return np.linalg.norm(self.feature(x) - self.feature(y))
+        pass
 
     def train(self, train=True):
         if train:
