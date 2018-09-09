@@ -2,14 +2,10 @@
 # Code by GunhoChoi
 
 import torch
-import torch.nn as nn
-import torch.utils as utils
 from torch.autograd import Variable
 import torchvision.datasets as dset
 import torchvision.transforms as transforms
-import numpy as np
 import matplotlib.pyplot as plt
-from dae_model import Encoder, Decoder
 
 mnist_test = dset.CIFAR10("data/cifar10", train=False, transform=transforms.ToTensor(), target_transform=None, download=True)
 encoder, decoder = torch.load('./models/deno_autoencoder.pkl')

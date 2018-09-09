@@ -10,7 +10,7 @@ import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 
 # Set Hyperparameters
-from dae_model import Encoder, Decoder
+from old.dae_model import Encoder, Decoder
 
 epoch = 100
 batch_size = 100
