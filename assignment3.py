@@ -5,6 +5,8 @@ import torch
 from PIL import Image
 from sklearn.cluster import KMeans
 from sklearn.metrics import pairwise_distances_argmin_min
+
+import utils
 import vae_train
 import vae_encode
 import torchvision
@@ -27,9 +29,10 @@ def main():
     train = True
 
     img = Image.open(file).convert('RGB')
+    img = utils.resize_proportional(img, new_height=900)
     target_image = np.array(img) / 255
 
-    # This will execute the Mosaicking algorithm of Assignment 2
+    # This will execute the Mosaicking algorithm of Assignment 3
     main = Assignment3()
     main.encode_features(train_features)
     main.train(train)
@@ -38,7 +41,7 @@ def main():
     # Saving the image inside in project root folder
     output_image *= 255
     im = Image.fromarray(output_image.astype('uint8'))
-    im.save('mosaic.png')
+    im.save(utils.datetime_filename('output/A3/mosaics/mosaic.png'))
 
 
 class Assignment3(Base):
@@ -113,5 +116,11 @@ class Assignment3(Base):
         return patch
 
 
+def make_folders():
+    os.makedirs('output/A3/mosaics/', exist_ok=True)
+    os.makedirs('models', exist_ok=True)
+
+
 if __name__ == '__main__':
+    make_folders()
     main()

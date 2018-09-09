@@ -98,6 +98,7 @@ class Assignment1(Base):
 
 def make_folders():
     os.makedirs('output/A1/mosaics/', exist_ok=True)
+    os.makedirs('models', exist_ok=True)
 
 
 if __name__ == '__main__':

@@ -22,6 +22,7 @@ def main():
     train = False
 
     img = Image.open(file).convert('RGB')
+    img = utils.resize_proportional(img, new_height=900)
     target_image = np.array(img) / 255
 
     # This will execute the Mosaicking algorithm of Assignment 2
@@ -79,6 +80,7 @@ class Assignment2(Base):
 
 def make_folders():
     os.makedirs('output/A2/mosaics/', exist_ok=True)
+    os.makedirs('models', exist_ok=True)
 
 
 if __name__ == '__main__':
