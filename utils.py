@@ -10,9 +10,7 @@ def number_of_patches(width, height, patch_size):
     TO BE IMPLEMENTED BY STUDENT
 
     """
-    n_patches_x = width // patch_size
-    n_patches_y = height // patch_size
-    return n_patches_x, n_patches_y
+    return 0, 0
 
 
 def output_image_size(n_patches_x, n_patches_y, patch_size):
@@ -20,9 +18,7 @@ def output_image_size(n_patches_x, n_patches_y, patch_size):
     TO BE IMPLEMENTED BY STUDENT
 
     """
-    width = n_patches_x * patch_size
-    height = n_patches_y * patch_size
-    return width, height
+    return 0, 0
 
 
 def slice_image(image, tile_size):
@@ -34,8 +30,8 @@ def slice_image(image, tile_size):
     width = image.shape[1]
     assert height > tile_size and width > tile_size
 
-    num_tiles_x, num_tiles_y = number_of_patches(width, height, tile_size)
-    width, height = output_image_size(num_tiles_x, num_tiles_y, tile_size)
+    num_tiles_x, num_tiles_y = 0, 0  # CHANGE THIS
+    width, height = 0, 0  # CHANGE THIS
 
     # Crop image to new size
     image = image[:height, :width]
