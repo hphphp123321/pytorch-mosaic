@@ -37,7 +37,9 @@ def slice_image(image, tile_size):
     num_tiles_x, num_tiles_y = number_of_patches(width, height, tile_size)
     width, height = output_image_size(num_tiles_x, num_tiles_y, tile_size)
 
+    # Crop image to new size
     image = image[:height, :width]
+
     tiles = np.zeros((num_tiles_y, num_tiles_x, tile_size, tile_size, 3))
     for i, ty in enumerate(range(0, height, tile_size)):
         for j, tx in enumerate(range(0, width, tile_size)):
