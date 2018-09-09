@@ -26,16 +26,18 @@ def output_image_size(n_patches_x, n_patches_y, patch_size):
 
 
 def slice_image(image, tile_size):
+    """
+    TO BE COMPLETED BY STUDENT
+
+    """
     height = image.shape[0]
     width = image.shape[1]
     assert height > tile_size and width > tile_size
 
-    num_tiles_y = height // tile_size
-    num_tiles_x = width // tile_size
+    num_tiles_x, num_tiles_y = number_of_patches(width, height, tile_size)
+    width, height = output_image_size(num_tiles_x, num_tiles_y, tile_size)
 
-    height = num_tiles_y * tile_size
-    width = num_tiles_x * tile_size
-
+    # Crop image to new size
     image = image[:height, :width]
 
     tiles = np.zeros((num_tiles_y, num_tiles_x, tile_size, tile_size, 3))
