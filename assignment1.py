@@ -5,6 +5,8 @@ import pickle
 from sklearn.externals import joblib
 from PIL import Image
 from sklearn.neighbors import NearestNeighbors
+
+import utils
 from base import Base
 
 
@@ -22,7 +24,7 @@ def main():
     # Setting this to True will train the model
     # All models are automatically saved in the folder 'models'
     # After the model is trained well, you can set this to false
-    train = True
+    train = False
 
     img = Image.open(file).convert('RGB')
     target_image = np.array(img) / 255
@@ -35,7 +37,7 @@ def main():
     # Saving the image inside in project root folder
     output_image *= 255
     im = Image.fromarray(output_image.astype('uint8'))
-    im.save('mosaic.png')
+    im.save(utils.datetime_filename('output/A1/mosaics/mosaic.png'))
 
 
 class Assignment1(Base):
@@ -92,6 +94,11 @@ class Assignment1(Base):
             print('Model not found.')
 
 
+def make_folders():
+    os.makedirs('output/A1/mosaics/', exist_ok=True)
+
+
 if __name__ == '__main__':
+    make_folders()
     main()
 

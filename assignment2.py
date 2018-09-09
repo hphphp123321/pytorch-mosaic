@@ -1,9 +1,12 @@
+import os
+
 import numpy as np
 import pickle
 from PIL import Image
 from sklearn.cluster import KMeans
 from sklearn.metrics import pairwise_distances_argmin_min
 
+import utils
 from base import Base
 
 
@@ -29,7 +32,7 @@ def main():
     # Saving the image inside in project root folder
     output_image *= 255
     im = Image.fromarray(output_image.astype('uint8'))
-    im.save('mosaic.png')
+    im.save(utils.datetime_filename('output/A2/mosaics/mosaic.png'))
 
 
 class Assignment2(Base):
@@ -74,5 +77,11 @@ class Assignment2(Base):
         return patch
 
 
+def make_folders():
+    os.makedirs('output/A2/mosaics/', exist_ok=True)
+
+
 if __name__ == '__main__':
+    make_folders()
     main()
+
