@@ -58,7 +58,9 @@ docs/_build/
 target/
 
 
-data/
+data/cifar10
+data/cifar100
+data/tiny-imagenet-200
 
 samples/
 
