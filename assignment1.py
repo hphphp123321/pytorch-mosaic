@@ -19,14 +19,16 @@ def main():
 
     # The program will start execution here
     # Change the filename to load your favourite picture
-    file = './images/lion.jpg'
+    file = './images/baby1.jpg'
 
     # Setting this to True will train the model
     # All models are automatically saved in the folder 'models'
     # After the model is trained well, you can set this to false
     train = False
 
+    # Load image and resize it to a fixed size (keeping aspect ratio)
     img = Image.open(file).convert('RGB')
+    img = utils.resize_proportional(img, new_height=900)
     target_image = np.array(img) / 255
 
     # This will execute the Mosaicking algorithm of Assignment 1

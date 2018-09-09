@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from PIL import Image
 
 import numpy as np
 
@@ -62,3 +63,10 @@ def datetime_filename(filename):
     base, ext = os.path.splitext(filename)
     dtime = datetime.now().strftime("-%Y-%m-%d-%H-%M-%S")
     return base + dtime + ext
+
+
+def resize_proportional(pil_image, new_height):
+    width, height = pil_image.size
+    aspect = width / height
+    img = pil_image.resize((int(new_height * aspect), int(new_height)), Image.BILINEAR)
+    return img

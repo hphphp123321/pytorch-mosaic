@@ -18,7 +18,7 @@ def main():
 
     # The program will start execution here
     # Change the filename to load your favourite picture
-    file = './images/dog1.png'
+    file = './images/eye2.jpg'
     train = False
 
     img = Image.open(file).convert('RGB')
