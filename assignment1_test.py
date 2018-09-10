@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import utils
-
+from sklearn.neighbors import NearestNeighbors
 from assignment1 import Assignment1
 
 
@@ -61,30 +61,36 @@ def test_feature():
 def test_distance():
     patch1 = main.data[0]
     patch2 = main.data[1]
-    dist = main.distance(patch1, patch1)
+    dist = main.distance(main.feature(patch1), main.feature(patch1))
     print('Distance between same patches: {:.4f}'.format(dist))
 
-    dist = main.distance(patch1, patch2)
+    dist = main.distance(main.feature(patch1), main.feature(patch2))
     print('Distance between two different patches: {:.4f}'.format(dist))
 
 
 def test_neighbors():
     num_cols = 3
+    num_rows = 3
 
+    main.nn.n_neighbors = num_cols
     i = 0
-    for col in range(num_cols):
-        i += 1
 
+    for row in range(num_rows):
         patch_idx = np.random.randint(0, len(main.data))
         patch = main.data[patch_idx]
+        neighbors = main.get_patch(patch).reshape(-1, 32, 32, 3)
 
-        plt.subplot(2, num_cols, i)
-        plt.title(str(patch_idx))
-        plt.imshow(patch)
+        for col in range(num_cols):
+            i += 1
 
-        neighbor = main.get_patch(patch).reshape(32, 32, 3)
-        plt.subplot(2, num_cols, num_cols + i)
-        plt.imshow(neighbor)
+            if col == 0:
+                plt.subplot(num_rows, num_cols, i)
+                plt.title(str(patch_idx))
+                plt.imshow(patch)
+            else:
+                plt.subplot(num_rows, num_cols, i)
+                # plt.title(str(patch_idx))
+                plt.imshow(neighbors[col])
 
     fig = plt.gcf()
     plt.show()
@@ -94,6 +100,7 @@ def test_neighbors():
 
 if __name__ == '__main__':
     main = Assignment1()
+    main.encode_features(False)
     main.train(False)
     make_folders()
 
