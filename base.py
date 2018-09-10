@@ -27,6 +27,9 @@ class Base:
     def train(self):
         pass
 
+    def encode_features(self, train=True):
+        pass
+
     def get_patch(self, tile):
         pass
 
