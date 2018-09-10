@@ -1,9 +1,7 @@
-import utils
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 import utils
-from sklearn.neighbors import NearestNeighbors
 from assignment1 import Assignment1
 
 
