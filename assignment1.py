@@ -21,7 +21,7 @@ def main():
     # Change the filename to load your favourite picture
     file = './images/eye2.jpg'
 
-    # Setting this to True will train the model
+    # Setting this to True will train the model (or pre-compute the features)
     # All models are automatically saved in the folder 'models'
     # After the model is trained well, you can set this to false
     train_features = False
