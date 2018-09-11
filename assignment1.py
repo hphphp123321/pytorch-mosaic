@@ -19,12 +19,14 @@ def main():
 
     # The program will start execution here
     # Change the filename to load your favourite picture
-    file = './images/baby1.jpg'
+    file = './images/eye2.jpg'
 
-    # Setting this to True will train the model
+    # Setting this to True will train the model (or pre-compute the features)
     # All models are automatically saved in the folder 'models'
     # After the model is trained well, you can set this to false
-    train = False
+    train_features = False
+    train_model = False
+
 
     # Load image and resize it to a fixed size (keeping aspect ratio)
     img = Image.open(file).convert('RGB')
@@ -33,7 +35,8 @@ def main():
 
     # This will execute the Mosaicking algorithm of Assignment 1
     main = Assignment1()
-    main.train(train)
+    main.encode_features(train_features)
+    main.train(train_model)
     output_image = main.mosaic(target_image)
 
     # Saving the image inside in project root folder
@@ -47,8 +50,10 @@ class Assignment1(Base):
     def __init__(self):
         super(Assignment1, self).__init__()
         self.data = pickle.load(open('./features/cifar10/raw.pkl', 'rb'))
+        self.features = None
         self.nn = self.get_model()
-        self.model_file = 'models/nearest_neighbor.pkl'
+        self.model_file = './models/nearest_neighbor.pkl'
+        self.feature_file = './features/cifar10/avg.pkl'
 
     def get_model(self):
         """
@@ -58,9 +63,19 @@ class Assignment1(Base):
         pass
 
     def get_patch(self, tile):
-        _, inds = self.nn.kneighbors(tile.reshape(1, -1))
+        tile_feature = self.feature(tile)
+        _, inds = self.nn.kneighbors(tile_feature.reshape(1, -1))
         patch = self.data[inds[0]]
         return patch
+
+    def encode_features(self, train=True):
+        if train:
+            self.features = np.stack([self.feature(patch) for patch in self.data])
+            with open(self.feature_file, 'wb') as file:
+                pickle.dump(self.features, file)
+        else:
+            with open(self.feature_file, 'rb') as file:
+                self.features = pickle.load(file)
 
     def feature(self, x):
         """
@@ -78,13 +93,16 @@ class Assignment1(Base):
         """
         TO BE IMPLEMENTED BY STUDENT
 
+        Compute the distance between features x and y.
+        The distance is used for nearest neighbor search in feature space (avg. color feature)
+
         """
         pass
 
     def train(self, train=True):
         if train:
             print('Fitting NN model ...')
-            self.nn.fit(self.data.reshape(len(self.data), -1))
+            self.nn.fit(self.features.reshape(len(self.features), -1))
             # with open(self.model_file, 'wb') as f:
             joblib.dump(self.nn, self.model_file)
 
@@ -99,6 +117,7 @@ class Assignment1(Base):
 def make_folders():
     os.makedirs('output/A1/mosaics/', exist_ok=True)
     os.makedirs('models', exist_ok=True)
+    os.makedirs('features/cifar10', exist_ok=True)
 
 
 if __name__ == '__main__':
