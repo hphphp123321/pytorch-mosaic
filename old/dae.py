@@ -21,8 +21,8 @@ learning_rate = 0.0002
 # mnist_train = dset.MNIST("./", train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
 # mnist_test = dset.MNIST("./", train=False, transform=transforms.ToTensor(), target_transform=None, download=True)
 
-mnist_train = dset.CIFAR10("data/cifar10", train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
-mnist_test = dset.CIFAR10("data/cifar10", train=False, transform=transforms.ToTensor(), target_transform=None, download=True)
+mnist_train = dset.CIFAR10("../data/cifar10", train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
+mnist_test = dset.CIFAR10("../data/cifar10", train=False, transform=transforms.ToTensor(), target_transform=None, download=True)
 
 # Set Data Loader(input pipeline)
 
@@ -91,7 +91,7 @@ for i in range(epoch):
         # break
         print(loss.item())
 
-    torch.save([encoder, decoder], './models/deno_autoencoder.pkl')
+    torch.save([encoder, decoder], '../models/deno_autoencoder.pkl')
 
     # check image with noise and denoised image\
 
@@ -103,13 +103,13 @@ for i in range(epoch):
     inp = input_img.data.numpy()
     out = output_img.data.numpy()
 
-    plt.imshow(origin[0])
+    plt.imshow(origin[0] * 255)
     plt.show()
 
-    plt.imshow(inp[0])
+    plt.imshow(inp[0] * 255)
     plt.show()
 
-    plt.imshow(out[0])
+    plt.imshow(out[0] * 255)
     plt.show()
 
     print(label[0])
