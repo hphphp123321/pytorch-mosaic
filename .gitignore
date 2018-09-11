@@ -87,3 +87,7 @@ autoencoder_conv\.pt
 models/
 
 features/cifar10/
+
+data/svhn/
+
+features/svhn/
