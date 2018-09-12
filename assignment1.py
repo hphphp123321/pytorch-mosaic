@@ -68,6 +68,13 @@ class Assignment1(Base):
         patch = self.data[inds[0]]
         return patch
 
+    def get_patches(self, tiles):
+        # N x (32 * 32 * 3)
+        tile_features = self.feature(tiles)  # N x feat_size
+        _, inds = self.nn.kneighbors(tile_features)
+        patches = self.data[inds]
+        return patches
+
     def encode_features(self, train=True):
         if train:
             self.features = np.stack([self.feature(patch) for patch in self.data])
