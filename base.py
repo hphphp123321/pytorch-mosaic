@@ -24,6 +24,16 @@ class Base:
         new_image = make_image(new_tiles)
         return new_image
 
+    def mosaic_fast(self, image):
+        print('Running "fast" mosaic ...')
+        tiles = slice_image(image, 32)
+        num_tiles = tiles.shape[0] * tiles.shape[1]
+        flat_tiles = np.stack(tiles).reshape(num_tiles, -1)
+        patches = self.get_patches(flat_tiles)
+        new_tiles = np.stack(patches).reshape(tiles.shape)
+        new_image = make_image(new_tiles)
+        return new_image
+
     def train(self):
         pass
 
@@ -31,6 +41,9 @@ class Base:
         pass
 
     def get_patch(self, tile):
+        pass
+
+    def get_patches(self, tiles):
         pass
 
     def feature(self, x):
