@@ -33,8 +33,13 @@ class Encoder(nn.Module):
 
     def forward(self, x):
         batch_size = x.size(0)
-        out = self.layer1(x)
-        out = self.layer2(out)
+        """
+        TO BE IMPLEMENTED
+        
+        Apply layer 1 and layer 2 to the input x and save the result in "out"
+        
+        """
+        out = None
         out = out.view(batch_size, -1)
         return out
 
@@ -71,6 +76,10 @@ class Decoder(nn.Module):
     def forward(self, x):
         batch_size = x.size(0)
         out = x.view(batch_size, 64, 8, 8)
-        out = self.layer1(out)
-        out = self.layer2(out)
+        """
+        TO BE IMPLEMENTED
+
+        Apply layer 1 and layer 2 to the input x and save the result in "out"
+
+        """
         return out

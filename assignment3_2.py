@@ -52,7 +52,7 @@ class Assignment3(Base):
         self.kmeans_file = 'models/kmeans-feat-dae.pkl'
         self.encoder_file = 'models/conv_dae.pt'
         self.feature_file = 'features/cifar10/dae.pt'
-        self.kmeans = self.get_model()
+        self.nn = self.get_model()
         self.encoder = None
         self.features = None
         self.closest = None
@@ -68,34 +68,22 @@ class Assignment3(Base):
         return dataset
 
     def get_model(self):
-        """
-        TO BE IMPLEMENTED BY STUDENT
-
-        """
-        # kmeans = KMeans(
-        #     n_clusters=500,
-        #     n_init=1,
-        #     max_iter=50,
-        #     tol=0.01,
-        #     verbose=True,
-        #     n_jobs=10,
-        # )
-        kmeans = NearestNeighbors(n_neighbors=1)
-        return kmeans
+        model = NearestNeighbors(n_neighbors=1)
+        return model
 
     def train(self, train=True):
         if train:
             print('Training Kmeans')
             data = self.features
-            self.kmeans.fit(data)
+            self.nn.fit(data)
             # self.closest, _ = pairwise_distances_argmin_min(self.kmeans.cluster_centers_, data)
             self.closest = []
             with open(self.kmeans_file, 'wb') as f:
-                pickle.dump((self.kmeans, self.closest), f)
+                pickle.dump((self.nn, self.closest), f)
             print('done.')
         else:
             with open(self.kmeans_file, 'rb') as f:
-                self.kmeans, self.closest = pickle.load(f)
+                self.nn, self.closest = pickle.load(f)
 
     def encode_features(self, train=True):
         if train:
@@ -119,7 +107,7 @@ class Assignment3(Base):
             self.encoder.eval()
             tile_features = self.encoder(x)
 
-        _, inds = self.kmeans.kneighbors(tile_features.reshape(1, -1))
+        _, inds = self.nn.kneighbors(tile_features.reshape(1, -1))
         patch, _ = self.data[inds[0][0]]
         # cluster_indices = self.kmeans.predict(tile_features)
         # # patch, _ = self.data[self.closest[cluster_indices[0]]]
