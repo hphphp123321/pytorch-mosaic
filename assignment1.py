@@ -1,4 +1,5 @@
 import os
+import time
 
 import numpy as np
 import pickle
@@ -19,7 +20,7 @@ def main():
 
     # The program will start execution here
     # Change the filename to load your favourite picture
-    file = './images/eye2.jpg'
+    file = './images/lion2.jpg'
 
     # Setting this to True will train the model (or pre-compute the features)
     # All models are automatically saved in the folder 'models'
@@ -30,14 +31,17 @@ def main():
 
     # Load image and resize it to a fixed size (keeping aspect ratio)
     img = Image.open(file).convert('RGB')
-    img = utils.resize_proportional(img, new_height=900)
+    img = utils.resize_proportional(img, new_height=2000)
     target_image = np.array(img) / 255
 
     # This will execute the Mosaicking algorithm of Assignment 1
     main = Assignment1()
     main.encode_features(train_features)
     main.train(train_model)
-    output_image = main.mosaic(target_image)
+
+    t0 = time.time()
+    output_image = main.mosaic_fast(target_image)
+    print(time.time() - t0, 'seconds.')
 
     # Saving the image inside in project root folder
     output_image *= 255
@@ -94,7 +98,7 @@ class Assignment1(Base):
         :return: The average pixel color
         """
 
-        return np.mean(x.reshape(32, 32, 3), axis=(0, 1))
+        return np.mean(x.reshape(-1, 32, 32, 3), axis=(1, 2))
 
     def distance(self, x, y):
         """

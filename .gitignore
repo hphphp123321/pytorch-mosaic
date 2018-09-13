@@ -91,3 +91,5 @@ features/cifar10/
 data/svhn/
 
 features/svhn/
+
+*.mp4
