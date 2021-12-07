@@ -33,13 +33,19 @@ def encode(model_file, features_file, dataset):
 
 
 if __name__ == '__main__':
+    transform = transforms.Compose([
+        transforms.Resize([8, 8]),
+        transforms.ToTensor()
+    ])
+
     dataset = torchvision.datasets.CIFAR10(
         './data/cifar10/',
         train=True,
-        transform=transforms.ToTensor(),
+        transform=transform,
         target_transform=None,
         download=True
     )
     model_file = 'models/conv_vae.pt'
     features_file = 'features/cifar10/vae.pt'
+    os.makedirs('features/cifar10/', exist_ok=True)
     encode(model_file, features_file, dataset)

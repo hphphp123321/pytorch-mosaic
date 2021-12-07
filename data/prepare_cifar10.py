@@ -3,6 +3,8 @@ import torch
 from torchvision.transforms import transforms
 import pickle
 import os
+import os, ssl
+
 
 
 dataset = torchvision.datasets.CIFAR10(

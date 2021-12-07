@@ -12,12 +12,12 @@ test_image = test_image.resize((32, 32))
 array = np.array(test_image).reshape((1, -1))
 
 
-model = pickle.load(open('./model.pkl', 'rb'))
+model = pickle.load(open('./models.pkl', 'rb'))
 data = pickle.load(open('./data.pkl', 'rb'))
 
 print(model.labels_)
 print(len(model.labels_))
-# print(model.cluster_centers_)
+# print(models.cluster_centers_)
 
 
 closest, _ = pairwise_distances_argmin_min(model.cluster_centers_, data)
@@ -91,9 +91,9 @@ prediction = model.predict(flat_tiles)
 
 new_tiles = []
 for p in prediction:
-    # index = random_cluster_representative(p, model.labels_)
+    # index = random_cluster_representative(p, models.labels_)
     # center = data[index]
-    # center = model.cluster_centers_[p]
+    # center = models.cluster_centers_[p]
     center = data[closest[p]]
     new_tiles.append(center.reshape((32, 32, 3)))
 

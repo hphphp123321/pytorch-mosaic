@@ -24,7 +24,7 @@ def main():
 
     # The program will start execution here
     # Change the filename to load your favourite picture
-    file = './images/lion2.jpg'
+    file = 'images/1.jpg'
     train_features = False
     train = False
 

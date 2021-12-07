@@ -6,6 +6,8 @@ import torchvision
 from torchvision import transforms
 from torchvision.utils import save_image
 from vae import VAE
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 
 def train(save_file, dataset):
@@ -24,11 +26,14 @@ def train(save_file, dataset):
     batch_size = 128
     learning_rate = 1e-3
 
+
+
+
     # Data loader
     data_loader = torch.utils.data.DataLoader(
         dataset=dataset,
         batch_size=batch_size,
-        shuffle=True
+        shuffle=True,
     )
 
     model = VAE().to(device)
@@ -70,18 +75,25 @@ def train(save_file, dataset):
             x_concat = torch.cat([x.view(-1, 3, 32, 32), out.view(-1, 3, 32, 32)], dim=3)
             save_image(x_concat, os.path.join(sample_dir, 'reconst-{}.png'.format(epoch+1)))
 
-        # Save model
+        # Save models
         torch.save(model, save_file)
 
 
 if __name__ == '__main__':
+
+    transform = transforms.Compose([
+        transforms.Resize([8, 8]),
+        transforms.ToTensor()
+    ])
+
     dataset = torchvision.datasets.CIFAR10(
         './data/cifar10/',
         train=True,
-        transform=transforms.ToTensor(),
+        transform=transform,
         target_transform=None,
         download=True
     )
 
     model_file = 'models/conv_vae.pt'
+    os.makedirs('models/', exist_ok=True)
     train(model_file, dataset)

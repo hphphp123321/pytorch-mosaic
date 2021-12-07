@@ -22,9 +22,9 @@ def main():
     # Change the filename to load your favourite picture
     file = './images/lion2.jpg'
 
-    # Setting this to True will train the model (or pre-compute the features)
+    # Setting this to True will train the models (or pre-compute the features)
     # All models are automatically saved in the folder 'models'
-    # After the model is trained well, you can set this to false
+    # After the models is trained well, you can set this to false
     train_features = False
     train_model = False
 
@@ -112,7 +112,7 @@ class Assignment1(Base):
 
     def train(self, train=True):
         if train:
-            print('Fitting NN model ...')
+            print('Fitting NN models ...')
             self.nn.fit(self.features.reshape(len(self.features), -1))
             # with open(self.model_file, 'wb') as f:
             joblib.dump(self.nn, self.model_file)

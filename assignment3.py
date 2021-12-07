@@ -24,7 +24,7 @@ def main():
 
     # The program will start execution here
     # Change the filename to load your favourite picture
-    file = './images/lion2.jpg'
+    file = './images/1.jpg'
     train_features = False
     train = True
 
@@ -58,10 +58,15 @@ class Assignment3(Base):
         self.closest = None
 
     def get_data(self):
+        transform = transforms.Compose([
+            transforms.Resize([8, 8]),
+            transforms.ToTensor()
+        ])
+
         dataset = torchvision.datasets.CIFAR10(
             './data/cifar10/',
             train=True,
-            transform=transforms.ToTensor(),
+            transform=transform,
             target_transform=None,
             download=True
         )
@@ -105,7 +110,7 @@ class Assignment3(Base):
         self.features, _ = torch.load(self.feature_file)
 
     def get_patch(self, tile):
-        x = torch.from_numpy(tile).float().view(1, 32, 32, 3).permute(0, 3, 1, 2)
+        x = torch.from_numpy(tile).float().view(1, 8, 8, 3).permute(0, 3, 1, 2)
         with torch.no_grad():
             self.encoder.eval()
             tile_features, _ = self.encoder.encode(x)
@@ -113,6 +118,7 @@ class Assignment3(Base):
         cluster_indices = self.kmeans.predict(tile_features)
         patch, _ = self.data[self.closest[cluster_indices[0]]]
         patch = patch.permute(1, 2, 0).numpy()
+        print(patch.shape)
         return patch
 
 

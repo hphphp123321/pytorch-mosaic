@@ -30,5 +30,5 @@ print('Number of features per image: ', num_features)
 
 model = KMeans(n_clusters=1000, random_state=0, n_jobs=10, verbose=True).fit(data)
 
-pickle.dump(model, open('./model.pkl', 'wb'))
+pickle.dump(model, open('./models.pkl', 'wb'))
 pickle.dump(data, open('./data.pkl', 'wb'))

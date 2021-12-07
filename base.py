@@ -9,7 +9,7 @@ class Base:
         pass
 
     def mosaic(self, image):
-        tiles = slice_image(image, 32)
+        tiles = slice_image(image, 8)
         num_tiles = tiles.shape[0] * tiles.shape[1]
         flat_tiles = np.stack(tiles).reshape(num_tiles, -1)
         new_tiles = []
@@ -17,7 +17,7 @@ class Base:
         for i, tile in enumerate(flat_tiles):
             print(f'tile {i:d} / {num_tiles:d}')
             patch = self.get_patch(tile)
-            new_tiles.append(patch.reshape(32, 32, 3))
+            new_tiles.append(patch.reshape(8, 8, 3))
 
         # print(new_tiles[0])
         new_tiles = np.stack(new_tiles).reshape(tiles.shape)

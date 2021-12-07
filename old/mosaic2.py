@@ -16,18 +16,18 @@ test_image = test_image.resize((32, 32))
 array = np.array(test_image).reshape((1, -1))
 
 autoencoder = torch.load('autoencoder_conv2.pt').to('cpu')
-model = pickle.load(open('./model-k1000-feat2.pkl', 'rb'))
+model = pickle.load(open('./models-k1000-feat2.pkl', 'rb'))
 dataset = torchvision.datasets.CIFAR10('./data/cifar10/', train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
 mu, _ = torch.load('features.pt')
 
 print(model.labels_)
 print(len(model.labels_))
-# print(model.cluster_centers_)
+# print(models.cluster_centers_)
 
 
 closest, _ = pairwise_distances_argmin_min(model.cluster_centers_, mu)
 
-# prediction = model.predict(array)
+# prediction = models.predict(array)
 
 center = model.cluster_centers_[1] / 256
 
@@ -103,9 +103,9 @@ prediction = model.predict(tile_features)
 
 new_tiles = []
 for p in prediction:
-    # index = random_cluster_representative(p, model.labels_)
+    # index = random_cluster_representative(p, models.labels_)
     # center = data[index]
-    # center = model.cluster_centers_[p]
+    # center = models.cluster_centers_[p]
     center, _ = dataset[closest[p]]
     new_tiles.append(center.permute(1, 2, 0).numpy())
 
